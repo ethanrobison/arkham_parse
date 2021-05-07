@@ -1,0 +1,2 @@
+< core.json jq ".[15:95] | map(select(.type_code==\"event\")) | .[] | {name: .name, text: .text}"
+: 1620356978:0;< core.json jq ".[15:95]|map(select(.type_code==\"event\"))|.[]|{name:.name,text:.text,xp:.xp,cost:.cost}" > core.out
