@@ -1,5 +1,5 @@
-
-:- module(arkham, [is_quantity/2]).
+:- module(arkham_main,
+    [sentence/3]).
 :- use_module('parse').
 :- load_test_files([]).
 
@@ -37,9 +37,6 @@ is_qualifier(limit,limit(N,A)) -->
     [N],{is_quantity(N,_Nos)},
     [per],[A], {is_area(A)}.
 %is_qualifier(limit, limit(1,deck,[footwear])).
-
-is_quantity(1,singular):- !.
-is_quantity(N,plural):- number(N), N \= 1, !.
 
 is_area(deck).
 is_area(investigator).
@@ -86,7 +83,6 @@ token_pool(resources,plural,resource_pool).
 % break --> ['\n'].
 
 % charisma("Permanent.\nYou have 1 additional ally slot.").
-
 
 % Track Shoes
 % Silas + Take Heart
