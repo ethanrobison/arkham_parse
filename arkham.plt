@@ -20,17 +20,3 @@ test(gain_1_res):-
         []).
 
 :- end_tests(gain_lose_tokens).
-
-% events
-:- begin_tests(events_text,[blocked(bad_pred)]).
-test(emergency_cache_text):-
-    %parse_card("Gain 3 resources.", [gain, 3, resources]).
-    false.
-test(hot_streak_text):-
-    % parse_card("Gain 10 resources.", [gain, 10, resources]).
-    false.
-test(charisma_text):-
-    % parse_card("Permanent.\nYou have 1 additional ally slot.",
-    % [permanent, '', you, have, 1, additional, ally, slot]).
-    false.
-:- end_tests(events_text).
