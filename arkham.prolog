@@ -1,5 +1,6 @@
 :- module(arkham_main,
-    [sentence/3]).
+    [sentence/3,
+    chaos_token/3]).
 :- use_module('parse').
 :- load_test_files([]).
 
@@ -66,26 +67,10 @@ token_pool(clues,plural,clue_pool).
 token_pool(resource,singular,resource_pool).
 token_pool(resources,plural,resource_pool).
 
-% gamestate includes
-% N hands <-- starting here
-% N resource pools
-% N clue pools
-% 1 Token Pool (with multiple subcategories)
-% N decks + encounter deck
-% N discard piles + encounter deck discard pile
-
-% card --> qualifier, break, card.
-% card --> [you], [have], num, [additional], slot, [slot].
-% card --> [gain], num, [resources].
-% num --> [1];[3];[10].
-% slot --> [ally];[accessory];[hand];[body];[arcane];[tarot].
-% qualifier --> [permanent];[exceptional].
-% break --> ['\n'].
-
-% charisma("Permanent.\nYou have 1 additional ally slot.").
-
-% Track Shoes
-% Silas + Take Heart
-% Grisly Totem + Take Heart
-% Old Keyring + Scavenging
-% Try, Try, Again + Take Heart
+% Chaos Tokens
+chaos_token(skull) --> ['[skull]'].
+chaos_token(cultist) --> ['[cultist]'].
+chaos_token(elder_thing) --> ['[elder_thing]'].
+chaos_token(tablet) --> ['[tablet]'].
+chaos_token(auto_fail) --> ['[auto_fail]'].
+chaos_token(elder_sign) --> ['[elder_sign]'].
