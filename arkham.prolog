@@ -5,14 +5,19 @@
 
 % TODO these are still handling cards on an individual basis... But we're getting somewhere.
 
+card(K,Es) --> keywords(K),nl,sentences(Es).
+card(Es) --> sentences(Es).
+
+sentences([E|T]) --> sentence(E),s,sentences(T),!.
+sentences(E) --> sentence(E).
+
 sentence([effect(Dir,Qty,Pool)]) -->
     pool_verb(Dir,Pool),s,
     quantity(Qty,Nos),s,
     pool_token(Pool,Nos),p,
     !.
 
-sentence([K,effect(Dir1,Qty,pool(T,P1)),effect(Dir2,Qty,pool(T,P2))]) -->
-    keywords([K]),nl,
+sentence([effect(Dir1,Qty,pool(T,P1)),effect(Dir2,Qty,pool(T,P2))]) -->
     pool_verb(Dir1,pool(T,P1)),s,
     quantity(Qty,Nos),s,
     pool_token(pool(T,P1),Nos),s,
@@ -36,31 +41,16 @@ pool_area(pool(_,location)) --> "at your location".
 opposite_dir(increase,decrease).
 opposite_dir(decrease,increase).
 
-% Indentation, punctuation, &c.
-s --> " ".
-p --> ".".
-nl --> "\n".
-
-% Numbers
-quantity(1,singular) -->
-    digit(D0),
-    digits(D),
-    { number_codes(1, [D0|D]) }, !.
-quantity(Q,plural) -->
-    digit(D0),
-    digits(D),
-    { number_codes(Q, [D0|D]) }.
-
-digits([D|T]) --> digit(D), !, digits(T).
-digits([]) --> [].
-
-digit(D) --> [D], { code_type(D,digit) }.
-
-% Keywords
+% Timing Window Keywords
 keywords([keywords(fast,window(W))]) --> fast,p,s,window(W),p.
 
-window(W) --> "play",s,optional_only,"during",s,window_words(W).
+window(W) --> "play",s,optional_only,timing_window(W).
+
+timing_window(during(W)) --> "during",s,window_words(W),!.
+timing_window(after(W)) --> "after",s,window_words(W),!.
+
 window_words(your_turn) --> "your turn".
+window_words(you_defeat_enemy)--> "you defeat an enemy".
 
 fast--> "fast".
 
@@ -89,3 +79,23 @@ chaos_token(elder_thing) --> "[elder_thing]".
 chaos_token(tablet) --> "[tablet]".
 chaos_token(auto_fail) --> "[auto_fail]".
 chaos_token(elder_sign) --> "[elder_sign]".
+
+% Indentation, punctuation, &c.
+s --> " ".
+p --> ".".
+nl --> "\n".
+
+% Numbers
+quantity(1,singular) -->
+    digit(D0),
+    digits(D),
+    { number_codes(1, [D0|D]) }, !.
+quantity(Q,plural) -->
+    digit(D0),
+    digits(D),
+    { number_codes(Q, [D0|D]) }.
+
+digits([D|T]) --> digit(D), !, digits(T).
+digits([]) --> [].
+
+digit(D) --> [D], { code_type(D,digit) }.
