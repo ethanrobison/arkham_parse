@@ -67,10 +67,12 @@ test(singular_plural_fail, [fail]):-
 
 :- begin_tests(core_events).
 
-test(emergency_cache,[true(E=[effect(increase,3,pool(resource,you))])]):-
-    arkham_main:sentence(E,"gain 3 resources.",[]).
+test(emergency_cache_keywords,[true(K=[])]):-
+    arkham_main:card(K, _E,"gain 3 resources.",[]).
+test(emergency_cache_effects,[true(E=[effect(increase,3,pool(resource,you))])]):-
+    arkham_main:card([], E,"gain 3 resources.",[]).
 test(hot_streak,[true(E=[effect(increase,10,pool(resource,you))])]):-
-    arkham_main:sentence(E,"gain 10 resources.",[]).
+    arkham_main_effects:card([], E,"gain 10 resources.",[]).
 test(working_a_hunch_effects, [true(Es=[
         effect(increase,1,pool(clue,you)),
         effect(decrease,1,pool(clue,location))])]):-

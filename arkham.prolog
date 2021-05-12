@@ -1,12 +1,8 @@
 :- module(arkham_main).
 :- load_test_files([]).
 
-:- set_prolog_flag(double_quotes,codes).
-
-% TODO these are still handling cards on an individual basis... But we're getting somewhere.
-
-card(K,Es) --> keywords(K),nl,sentences(Es).
-card(Es) --> sentences(Es).
+card(K,Es) --> keywords(K),nl,sentences(Es),!.
+card([],Es) --> sentences(Es).
 
 sentences([E|T]) --> sentence(E),s,sentences(T),!.
 sentences(E) --> sentence(E).
@@ -62,14 +58,6 @@ action_keyword(Action) --> "<b>", action_word(Action), (".";""), "</b>".
 
 action_word(fight) --> "fight",!.
 action_word(evade) --> "evade",!.
-
-% Token Pools
-token_pool(damage,_,health_pool).
-token_pool(horror,_,sanity_pool).
-token_pool(clue,singular,clue_pool).
-token_pool(clues,plural,clue_pool).
-token_pool(resource,singular,resource_pool).
-token_pool(resources,plural,resource_pool).
 
 % Chaos Tokens
 
